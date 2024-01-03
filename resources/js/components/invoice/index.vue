@@ -2,11 +2,14 @@
 import { ref, onBeforeMount } from 'vue'
 import axios from 'axios'
 
+import { useRouter } from 'vue-router'
+
+
 export default {
   setup() {
     let invoices = ref([])
     let searchInvoice = ref([])
-    
+    const router = useRouter()
 
     onBeforeMount(async () => {
       await getInvoices()
@@ -27,12 +30,19 @@ export default {
         invoices.value = response.data.Invoices
 
     }
+    const newInvoice = async () => {
+        let form = await axios.get("/api/new_invoice")
+        console.log('form', form.data)
+        router.push('/invoice/new')
+        
+    }
 
     return {
       invoices  ,
       searchInvoice,
       getInvoices,
-      search
+      search , 
+      newInvoice
     }
   }
 }
@@ -50,7 +60,7 @@ export default {
                 <h2 class="invoice__title">Invoices</h2>
             </div>
             <div>
-                <a class="btn btn-secondary">
+                <a class="btn btn-secondary" @click="newInvoice">
                     New Invoice
                 </a>
             </div>
