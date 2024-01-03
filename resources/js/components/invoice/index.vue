@@ -92,9 +92,10 @@ export default {
                 <a href="#" class="table--items--transactionId">{{ item.id }}</a>
                 <p>{{ item.date }}</p>
                 <p>{{ item.number }}</p>
-                <p>{{ item.customer_id }}</p>
+                <p v-if="item.customer">{{ item.customer.first_name }}</p>
+                <p v-else></p>
                 <p>{{ item.due_date }}</p>
-                <p>{{ item.total }}</p>
+                <p>${{ item.total }}</p>
             </div>
             <div class="table--items" v-else>
                 <p> Invoice Not Found </p>

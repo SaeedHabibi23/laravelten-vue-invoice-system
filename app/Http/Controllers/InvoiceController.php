@@ -9,7 +9,7 @@ use DB;
 class InvoiceController extends Controller
 {
    public function get_all_invoices(){
-        $Invoices = DB::table('invoices')->get();
+        $Invoices = Invoice::with('customer')->orderBy('id', 'DESC')->get();
         return response()->json([
             'Invoices' => $Invoices
         ], 200);

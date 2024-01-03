@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Counter extends Model
 {
-    use HasFactory;
+    protected $table = ('counters');
+    protected $primaryKey = 'id';
 }
