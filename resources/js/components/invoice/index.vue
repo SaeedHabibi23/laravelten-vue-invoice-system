@@ -5,6 +5,8 @@ import axios from 'axios'
 export default {
   setup() {
     let invoices = ref([])
+    let searchInvoice = ref([])
+    
 
     onBeforeMount(async () => {
       await getInvoices()
@@ -19,9 +21,18 @@ export default {
         console.error('Error getting invoices', error)
       }
     }
+    const search = async () => {
+        let response = await axios.get('/api/search_invoice?s='+searchInvoice.value)
+        console.log('Invoices', invoices.value)
+        invoices.value = response.data.Invoices
+
+    }
 
     return {
-      invoices // اینجا از return استفاده کنید
+      invoices  ,
+      searchInvoice,
+      getInvoices,
+      search
     }
   }
 }
@@ -74,7 +85,8 @@ export default {
                 </div>
                 <div class="relative">
                     <i class="table--search--input--icon fas fa-search "></i>
-                    <input class="table--search--input" type="text" placeholder="Search invoice">
+                    <input class="table--search--input" type="text"
+                    v-model="searchInvoice" @keyup="search()" placeholder="Search invoice">
                 </div>
             </div>
 
